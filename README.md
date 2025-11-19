@@ -224,14 +224,6 @@ Contributions are welcome! Feel free to:
 
 MIT License - feel free to use this for learning and building!
 
-## Acknowledgments
-
-- Built with [Anthropic's Claude API](https://www.anthropic.com/api)
-- Uses the official [Anthropic Java SDK](https://github.com/anthropics/anthropic-sdk-java)
-- Inspired by the LeetCode learning community
-
----
-
 **Happy Coding! 💪**
 
 *Built by developers, for developers who want to level up their problem-solving skills.*
