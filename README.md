@@ -12,7 +12,7 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 ## Features
 
 - 🔄 **Interactive CLI** - Solve multiple problems in one session
-- 🤖 **Powered by Claude AI** (Sonnet 4) - Expert-level explanations
+- 🤖 **Multi-Model Support** - Choose between **Claude** (Anthropic) and **Gemini** (Google Vertex AI)
 - 📈 **Multiple Approaches** - See brute force → optimized solutions
 - ⚡ **Complexity Analysis** - Understand time/space trade-offs
 - 💻 **Working Code** - Get production-ready Java implementations with comments
@@ -23,7 +23,8 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 
 - Java 21 or higher
 - Maven 3.6+
-- Anthropic API key (get one at https://console.anthropic.com)
+- **For Claude:** Anthropic API key (get one at https://console.anthropic.com)
+- **For Gemini:** Google Cloud Project with Vertex AI API enabled & Google Cloud SDK installed
 
 ## Setup
 
@@ -36,9 +37,26 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 2. **Configure API Key**
 
    Create `src/main/resources/config.properties`:
+
+   **Option A: Use Claude (Anthropic)**
 ```properties
+   provider=anthropic
    anthropic.api.key=your-api-key-here
+   # Optional: anthropic.model=claude-3-5-sonnet-latest
 ```
+
+   **Option B: Use Gemini (Google Vertex AI)**
+```properties
+   provider=gemini
+   gemini.project.id=your-gcp-project-id
+   gemini.location=us-central1
+   # Optional: gemini.model.name=gemini-2.5-pro
+```
+
+   If using Gemini, you must also authenticate locally:
+   ```bash
+   gcloud auth application-default login
+   ```
 
 ⚠️ **Important**: Never commit this file! It's already in `.gitignore`.
 
@@ -98,10 +116,12 @@ Solve another problem? (y/n):
 src/
 ├── main/
 │   ├── java/org/codebro/
-│   │   ├── Main.java                  # Interactive CLI entry point
+│   │   ├── Main.java                  # Application entry point & config
+│   │   ├── CodeBroCLI.java            # CLI User Interface
 │   │   ├── CodeBro.java               # Main agent orchestrator
 │   │   ├── APIClient.java             # API interface
 │   │   ├── AnthropicSDKClient.java    # Anthropic SDK implementation
+│   │   ├── GeminiSDKClient.java       # Google Vertex AI implementation
 │   │   └── PromptBuilder.java         # Builds structured prompts
 │   └── resources/
 │       └── config.properties          # API key configuration (gitignored)
@@ -116,6 +136,7 @@ CodeBro uses a clean, testable architecture:
 
 - **APIClient Interface** - Abstraction for AI providers
 - **AnthropicSDKClient** - Implementation using official Anthropic SDK
+- **GeminiSDKClient** - Implementation using Google Vertex AI SDK
 - **PromptBuilder** - Crafts structured prompts for optimal responses
 - **CodeBro** - Orchestrates the problem-solving workflow
 
@@ -156,6 +177,7 @@ Edit `PromptBuilder.java` to customize:
 ## Dependencies
 
 - **Anthropic Java SDK** (2.10.0) - Official Claude API client
+- **Google Cloud Vertex AI** (3.x) - Official Gemini API client
 - **Gson** (2.11.0) - JSON parsing (used by SDK)
 - **JUnit 5** (5.10.0) - Testing framework
 - **Mockito** (5.2.0) - Mocking for unit tests
