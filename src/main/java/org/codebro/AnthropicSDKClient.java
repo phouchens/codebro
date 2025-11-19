@@ -9,16 +9,18 @@ import java.util.Collections;
 
 public class AnthropicSDKClient implements APIClient {
     private final AnthropicClient client;
-    private static final String model = "claude-sonnet-4-20250514";
+    private final String model;
 
-    public AnthropicSDKClient(String apiKey) {
+    public AnthropicSDKClient(String apiKey, String model) {
         this.client = AnthropicOkHttpClient.builder()
                 .apiKey(apiKey)
                 .build();
+        this.model = model;
     }
 
-    AnthropicSDKClient(AnthropicClient client) {
+    AnthropicSDKClient(AnthropicClient client, String model) {
         this.client = client;
+        this.model = model;
     }
 
     @Override
@@ -44,7 +46,6 @@ public class AnthropicSDKClient implements APIClient {
         } catch (Exception e) {
             throw new IOException("SDK Error: " + e.getMessage(), e);
         }
-
 
     }
 }

@@ -11,8 +11,11 @@ import java.util.function.Function;
 public class Main {
     public static void main(String[] args) {
         Map<String, Function<Properties, APIClient>> clientFactories = new HashMap<>();
-        clientFactories.put("anthropic",
-                (props) -> new AnthropicSDKClient(getRequiredProperty(props, "anthropic.api.key")));
+        clientFactories.put("anthropic", (props) -> {
+            String apiKey = getRequiredProperty(props, "anthropic.api.key");
+            String model = props.getProperty("anthropic.model", "claude-3-5-sonnet-latest");
+            return new AnthropicSDKClient(apiKey, model);
+        });
         clientFactories.put("gemini", (props) -> {
             String location = getRequiredProperty(props, "gemini.location");
             String projectId = getRequiredProperty(props, "gemini.project.id");

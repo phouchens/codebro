@@ -5,24 +5,25 @@ import com.google.cloud.vertexai.api.GenerateContentResponse;
 import com.google.cloud.vertexai.generativeai.GenerativeModel;
 import com.google.cloud.vertexai.generativeai.ResponseHandler;
 
-public class GeminiSDKClient implements APIClient {
+public class GeminiSDKClient implements APIClient, AutoCloseable {
 
-    private final String projectId;
-    private final String location;
     private final String modelName;
+    private final VertexAI vertexAI;
 
     public GeminiSDKClient(String projectId, String location, String modelName) {
-        this.projectId = projectId;
-        this.location = location;
         this.modelName = modelName;
+        this.vertexAI = new VertexAI(projectId, location);
     }
 
     @Override
     public String sendMessage(String prompt) throws Exception {
-        try (VertexAI vertexAI = new VertexAI(projectId, location)) {
-            GenerativeModel model = new GenerativeModel(modelName, vertexAI);
-            GenerateContentResponse response = model.generateContent(prompt);
-            return ResponseHandler.getText(response);
-        }
+        GenerativeModel model = new GenerativeModel(modelName, vertexAI);
+        GenerateContentResponse response = model.generateContent(prompt);
+        return ResponseHandler.getText(response);
+    }
+
+    @Override
+    public void close() {
+        vertexAI.close();
     }
 }
