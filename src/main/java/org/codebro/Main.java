@@ -14,7 +14,8 @@ public class Main {
         clientFactories.put("anthropic", (props) -> {
             String apiKey = getRequiredProperty(props, "anthropic.api.key");
             String model = props.getProperty("anthropic.model", "claude-3-5-sonnet-latest");
-            return new AnthropicSDKClient(apiKey, model);
+            long maxTokens = Long.parseLong(props.getProperty("anthropic.max.tokens", "4096"));
+            return new AnthropicSDKClient(apiKey, model, maxTokens);
         });
         clientFactories.put("gemini", (props) -> {
             String location = getRequiredProperty(props, "gemini.location");

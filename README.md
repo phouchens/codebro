@@ -44,6 +44,7 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
    provider=anthropic
    anthropic.api.key=your-api-key-here
    # Optional: anthropic.model=claude-3-5-sonnet-latest
+   # Optional: anthropic.max.tokens=4096
 ```
 
    **Option B: Use Gemini (Google Vertex AI)**

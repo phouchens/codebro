@@ -10,17 +10,20 @@ import java.util.Collections;
 public class AnthropicSDKClient implements APIClient {
     private final AnthropicClient client;
     private final String model;
+    private final long maxTokens;
 
-    public AnthropicSDKClient(String apiKey, String model) {
+    public AnthropicSDKClient(String apiKey, String model, long maxTokens) {
         this.client = AnthropicOkHttpClient.builder()
                 .apiKey(apiKey)
                 .build();
         this.model = model;
+        this.maxTokens = maxTokens;
     }
 
-    AnthropicSDKClient(AnthropicClient client, String model) {
+    AnthropicSDKClient(AnthropicClient client, String model, long maxTokens) {
         this.client = client;
         this.model = model;
+        this.maxTokens = maxTokens;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class AnthropicSDKClient implements APIClient {
 
             MessageCreateParams params = MessageCreateParams.builder()
                     .model(model)
-                    .maxTokens(4096L)
+                    .maxTokens(maxTokens)
                     .messages(Collections.singletonList(messageParam))
                     .build();
             Message message = client.messages().create(params);
