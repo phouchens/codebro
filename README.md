@@ -16,6 +16,7 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 - 📈 **Multiple Approaches** - See brute force → optimized solutions
 - ⚡ **Complexity Analysis** - Understand time/space trade-offs
 - 💻 **Working Code** - Get production-ready Java implementations with comments
+- 💾 **Save to File** - Automatically save generated code and tests to a local project directory
 - ✅ **Test Cases** - JUnit tests with edge cases included
 - 🏗️ **Built with Official SDK** - Uses Anthropic's official Java SDK
 
@@ -108,6 +109,10 @@ END
 
 ==================================================
 
+Save solution to file? (y/n): y
+Enter directory path (default: ./solution): ./mysolution
+Successfully saved 3 files to ./mysolution
+
 Solve another problem? (y/n): 
 ```
 
@@ -122,6 +127,7 @@ src/
 │   │   ├── APIClient.java             # API interface
 │   │   ├── AnthropicSDKClient.java    # Anthropic SDK implementation
 │   │   ├── GeminiSDKClient.java       # Google Vertex AI implementation
+│   │   ├── ProjectWriter.java         # Saves generated code to files
 │   │   └── PromptBuilder.java         # Builds structured prompts
 │   └── resources/
 │       └── config.properties          # API key configuration (gitignored)
@@ -204,7 +210,7 @@ Check that your `config.properties` file has the correct property name: `anthrop
 
 ## Future Enhancements
 
-- [ ] Save tutorials to files (Markdown, HTML)
+- [x] Save tutorials to files (Java Project)
 - [ ] Problem history and favorites
 - [ ] Different difficulty levels (beginner/interview/advanced)
 - [ ] Conversation mode for follow-up questions
