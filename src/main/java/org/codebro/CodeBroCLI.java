@@ -48,13 +48,34 @@ public class CodeBroCLI {
 
             System.out.println("\n🤔 CodeBro is thinking...\n");
 
+            String tutorial = null;
             try {
-                String tutorial = codeBro.solveProblem(problem);
+                tutorial = codeBro.solveProblem(problem);
                 System.out.println(tutorial);
                 System.out.println("\n" + "=".repeat(50) + "\n");
             } catch (Exception e) {
                 System.err.println("Error solving problem: " + e.getMessage());
                 System.out.println();
+                continue;
+            }
+
+            System.out.print("Save solution to file? (y/n): ");
+            String saveAnswer = scanner.nextLine().trim().toLowerCase();
+
+            if (saveAnswer.equals("y") || saveAnswer.equals("yes")) {
+                System.out.print("Enter directory path (default: ./solution): ");
+                String path = scanner.nextLine().trim();
+                if (path.isEmpty()) {
+                    path = "./solution";
+                }
+
+                try {
+                    ProjectWriter writer = new ProjectWriter();
+                    int count = writer.saveProject(tutorial, path);
+                    System.out.println("Successfully saved " + count + " files to " + path);
+                } catch (Exception e) {
+                    System.err.println("Error saving files: " + e.getMessage());
+                }
             }
 
             System.out.print("Solve another problem? (y/n): ");
