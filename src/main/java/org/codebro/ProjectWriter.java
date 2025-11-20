@@ -27,6 +27,12 @@ public class ProjectWriter {
             String content = matcher.group(2).trim();
 
             Path filePath = rootPath.resolve(filename);
+
+            // Create parent directories if the filename contains subdirectories
+            if (filePath.getParent() != null) {
+                Files.createDirectories(filePath.getParent());
+            }
+
             Files.writeString(filePath, content);
             System.out.println("Saved: " + filePath.toAbsolutePath());
             filesSaved++;

@@ -38,13 +38,13 @@ public class Main {
 
             String provider = props.getProperty("provider", "anthropic");
 
-            APIClient apiClient = clientFactories.getOrDefault(provider.toLowerCase(), (p) -> {
+            try (APIClient apiClient = clientFactories.getOrDefault(provider.toLowerCase(), (p) -> {
                 throw new IllegalArgumentException("Unknown provider: " + provider);
-            }).apply(props);
-
-            CodeBro codeBro = new CodeBro(apiClient, new PromptBuilder());
-            CodeBroCLI cli = new CodeBroCLI(codeBro);
-            cli.start();
+            }).apply(props)) {
+                CodeBro codeBro = new CodeBro(apiClient, new PromptBuilder());
+                CodeBroCLI cli = new CodeBroCLI(codeBro);
+                cli.start();
+            }
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

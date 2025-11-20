@@ -5,8 +5,11 @@ public class PromptBuilder {
 
    public PromptBuilder() {
       try {
-         this.template = new String(getClass().getClassLoader()
-               .getResourceAsStream("prompts/tutorial.txt").readAllBytes());
+         var stream = getClass().getClassLoader().getResourceAsStream("prompts/tutorial.txt");
+         if (stream == null) {
+            throw new RuntimeException("Prompt template file 'prompts/tutorial.txt' not found in resources");
+         }
+         this.template = new String(stream.readAllBytes());
       } catch (Exception e) {
          throw new RuntimeException("Failed to load prompt template", e);
       }
