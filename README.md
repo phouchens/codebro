@@ -222,7 +222,7 @@ Contributions are welcome! Feel free to:
 
 ## License
 
-MIT License - feel free to use this for learning and building!
+MIT License - feel free to use this for learning and building! 
 
 **Happy Coding! 💪**
 
