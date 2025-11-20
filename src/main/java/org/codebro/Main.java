@@ -25,8 +25,13 @@ public class Main {
 
         try {
             Properties props = new Properties();
-            try (InputStream input = Main.class.getClassLoader()
-                    .getResourceAsStream("config.properties")) {
+            InputStream input = Main.class.getClassLoader().getResourceAsStream("config.properties");
+            if (input == null) {
+                System.err.println("⚠️  Configuration file 'config.properties' not found in resources!");
+                System.err.println("   Please create it with your API keys. See README.md for details.");
+                return;
+            }
+            try (input) {
                 props.load(input);
             }
 

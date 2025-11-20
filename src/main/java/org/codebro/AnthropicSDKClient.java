@@ -48,4 +48,9 @@ public class AnthropicSDKClient implements APIClient {
         }
 
     }
+
+    @Override
+    public void close() throws Exception {
+        this.client.close();
+    }
 }

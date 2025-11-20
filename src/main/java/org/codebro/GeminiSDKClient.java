@@ -5,7 +5,7 @@ import com.google.cloud.vertexai.api.GenerateContentResponse;
 import com.google.cloud.vertexai.generativeai.GenerativeModel;
 import com.google.cloud.vertexai.generativeai.ResponseHandler;
 
-public class GeminiSDKClient implements APIClient, AutoCloseable {
+public class GeminiSDKClient implements APIClient {
 
     private final String modelName;
     private final VertexAI vertexAI;
