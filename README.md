@@ -176,10 +176,15 @@ Modify `AnthropicSDKClient.java` to change:
 
 ### Prompt Customization
 
-Edit `PromptBuilder.java` to customize:
-- Tutorial structure and sections
-- Level of detail
-- Output format and style
+CodeBro uses a template-based system for prompts. The tutorial prompt is stored in:
+```
+src/main/resources/prompts/tutorial.txt
+```
+
+To customize the prompt:
+1. Edit `tutorial.txt` directly
+2. Use `{{PROBLEM}}` as a placeholder for the user's input
+3. No code changes needed - the template is loaded at runtime
 
 ## Dependencies
 
