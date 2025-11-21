@@ -18,14 +18,16 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 - 💻 **Working Code** - Get production-ready Java implementations with comments
 - 💾 **Save to File** - Automatically save generated code and tests to a local project directory
 - ✅ **Test Cases** - JUnit tests with edge cases included
-- 🏗️ **Built with Official SDK** - Uses Anthropic's official Java SDK
+- 🏗️ **Built with Official SDKs** - Uses Anthropic's official Java SDK and Google Vertex AI SDK
+- ⚡ **Gradle Build** - Fast, modern build system with incremental compilation
 
 ## Prerequisites
 
 - Java 21 or higher
-- Maven 3.6+
 - **For Claude:** Anthropic API key (get one at https://console.anthropic.com)
 - **For Gemini:** Google Cloud Project with Vertex AI API enabled & Google Cloud SDK installed
+
+**Note:** Gradle wrapper is included - no separate Gradle installation needed!
 
 ## Setup
 
@@ -64,7 +66,7 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 
 3. **Build the project**
 ```bash
-   mvn clean install
+   ./gradlew build
 ```
 
 ## Usage
@@ -73,7 +75,7 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 
 Run CodeBro:
 ```bash
-mvn exec:java -Dexec.mainClass="org.codebro.Main"
+./gradlew run
 ```
 
 Or run `Main.java` directly from your IDE.
@@ -131,10 +133,14 @@ src/
 │   │   ├── ProjectWriter.java         # Saves generated code to files
 │   │   └── PromptBuilder.java         # Builds structured prompts
 │   └── resources/
-│       └── config.properties          # API key configuration (gitignored)
-└── test/java/org/codebro/
-    ├── CodeBroTest.java               # Unit tests with mocks
-    └── PromptBuilderTest.java         # Prompt builder tests
+│       ├── config.properties          # API key configuration (gitignored)
+│       └── prompts/tutorial.txt       # Prompt template
+├── test/java/org/codebro/
+│   ├── CodeBroTest.java               # Unit tests with mocks
+│   └── PromptBuilderTest.java         # Prompt builder tests
+├── build.gradle                       # Gradle build configuration
+├── settings.gradle                    # Gradle settings
+└── gradlew                            # Gradle wrapper script
 ```
 
 ## Architecture
@@ -156,12 +162,12 @@ This design makes it easy to:
 
 Run all tests:
 ```bash
-mvn test
+./gradlew test
 ```
 
 Run specific test:
 ```bash
-mvn test -Dtest=CodeBroTest
+./gradlew test --tests CodeBroTest
 ```
 
 The test suite uses Mockito to mock the API client, ensuring fast, reliable tests without API calls.
@@ -188,11 +194,15 @@ To customize the prompt:
 
 ## Dependencies
 
+All dependencies are managed in `build.gradle`:
+
 - **Anthropic Java SDK** (2.10.0) - Official Claude API client
-- **Google Cloud Vertex AI** (3.x) - Official Gemini API client
+- **Google Cloud Vertex AI** (0.5.0) - Official Gemini API client
 - **Gson** (2.11.0) - JSON parsing (used by SDK)
 - **JUnit 5** (5.10.0) - Testing framework
-- **Mockito** (5.2.0) - Mocking for unit tests
+- **Mockito** (5.11.0) - Mocking for unit tests
+
+See [GRADLE_GUIDE.md](GRADLE_GUIDE.md) for more Gradle commands and tips.
 
 ## Tips for Best Results
 
@@ -213,6 +223,11 @@ Check that your `config.properties` file has the correct property name: `anthrop
 - Verify your API key is valid at https://console.anthropic.com
 - Check you have sufficient credits in your account
 - Ensure you're using Java 21+
+
+### Build Issues
+- Run `./gradlew clean build` to rebuild from scratch
+- Check `build.gradle` for correct dependency versions
+- Try `./gradlew --refresh-dependencies` to update dependencies
 
 ## Future Enhancements
 

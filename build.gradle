@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'eclipse'
+}
+
+group = 'org.codebro'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // AI SDKs
+    implementation 'com.anthropic:anthropic-java:2.10.0'
+    implementation 'com.google.cloud:google-cloud-vertexai:0.5.0'
+    
+    // JSON processing
+    implementation 'com.google.code.gson:gson:2.11.0'
+    
+    // Logging
+    implementation 'org.slf4j:slf4j-simple:2.0.9'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
+}
+
+application {
+    mainClass = 'org.codebro.Main'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    
+    // Enable experimental ByteBuddy for Mockito (same as Maven config)
+    jvmArgs '-Dnet.bytebuddy.experimental=true'
+}
+
+// Task to create a fat JAR (executable JAR with all dependencies)
+tasks.register('fatJar', Jar) {
+    archiveClassifier = 'all'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': 'org.codebro.Main'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
