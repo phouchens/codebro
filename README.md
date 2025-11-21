@@ -1,5 +1,11 @@
 # CodeBro 🤝
 
+<div align="center">
+
+![Epic CodeBro Handshake](docs/images/codebro-handshake.png)
+
+</div>
+
 Your AI-powered coding buddy that helps you crush LeetCode problems!
 
 CodeBro is an interactive CLI tool that takes any coding problem and breaks it down into:
