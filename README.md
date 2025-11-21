@@ -41,6 +41,8 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
 
    Create `src/main/resources/config.properties`:
 
+   ⚠️ **Important**: Never commit this file! It's already in `.gitignore`.
+
    **Option A: Use Claude (Anthropic)**
 ```properties
    provider=anthropic
@@ -61,8 +63,6 @@ CodeBro is an interactive CLI tool that takes any coding problem and breaks it d
    ```bash
    gcloud auth application-default login
    ```
-
-⚠️ **Important**: Never commit this file! It's already in `.gitignore`.
 
 3. **Build the project**
 ```bash
@@ -233,7 +233,6 @@ Check that your `config.properties` file has the correct property name: `anthrop
 
 - [x] Save tutorials to files (Java Project)
 - [ ] Problem history and favorites
-- [ ] Different difficulty levels (beginner/interview/advanced)
 - [ ] Conversation mode for follow-up questions
 - [ ] Support for multiple programming languages
 - [ ] Export to Anki flashcards
